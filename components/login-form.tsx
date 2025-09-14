@@ -1,46 +1,46 @@
-"use client"
 
-import type React from "react"
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { Eye, EyeOff } from "lucide-react"
+import type React from "react";
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Eye, EyeOff } from "lucide-react";
+import { signIn } from "@/auth";
+import { handleGithubSignIn , handleGoogleSignIn } from "@/app/actions/authActions";
 
 export function LoginForm() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Redirect to dashboard after login
-    window.location.href = "/dashboard"
-  }
+  
 
   return (
-    <Card className="w-full shadow-xl border-0 bg-white">
+    <Card className="w-full  border-0 bg-white">
       <CardHeader className="text-center pb-2">
         <div className="flex items-center justify-center mb-6">
           <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center">
             <span className="text-white font-bold text-xl">E</span>
           </div>
-          <span className="ml-2 text-2xl font-bold text-gray-800">EduWorld</span>
+          <span className="ml-2 text-2xl font-bold text-gray-800">
+            EduWorld
+          </span>
         </div>
         <h1 className="text-2xl font-bold text-gray-800 mb-2">Welcome Back!</h1>
-        <p className="text-gray-600 text-sm">Sign in to continue your learning journey.</p>
+        <p className="text-gray-600 text-sm">
+          Sign in to continue your learning journey.
+        </p>
       </CardHeader>
 
       <CardContent className="space-y-4">
         {/* Social Login Buttons */}
         <div className="space-y-3">
-          <Button
+          <form action={handleGoogleSignIn}>
+             <Button
             variant="outline"
             className="w-full h-12 text-gray-700 border-gray-300 hover:bg-gray-50 bg-transparent"
-            type="button"
+            type="submit"
           >
             <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
               <path
@@ -62,102 +62,35 @@ export function LoginForm() {
             </svg>
             Continue with Google
           </Button>
-
-          <Button
-            variant="outline"
-            className="w-full h-12 text-gray-700 border-gray-300 hover:bg-gray-50 bg-transparent"
-            type="button"
-          >
-            <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
-              <path
-                fill="currentColor"
-                d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09z"
-              />
-              <path
-                fill="currentColor"
-                d="M15.53 3.83c.893-1.09 1.479-2.58 1.309-4.08-1.297.049-2.87.8-3.8 1.78-.8.9-1.5 2.34-1.34 3.73 1.42.11 2.89-.72 3.83-1.43z"
-              />
-            </svg>
-            Continue with Apple
-          </Button>
-        </div>
-
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <Separator className="w-full" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-2 text-gray-500">or</span>
-          </div>
-        </div>
-
-        {/* Email/Password Form */}
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email" className="text-sm font-medium text-gray-700">
-              Email
-            </Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="your@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-              required
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="password" className="text-sm font-medium text-gray-700">
-              Password
-            </Label>
-            <div className="relative">
-              <Input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500 pr-10"
-                required
-              />
-              <button
-                type="button"
-                className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                onClick={() => setShowPassword(!showPassword)}
+          </form>
+         
+          <form action={handleGithubSignIn}>
+            <Button
+              variant="outline"
+              className="w-full h-12 text-gray-700 border-gray-300 hover:bg-gray-50 bg-transparent"
+              type="submit"
+            >
+              <svg
+                className="w-5 h-5 mr-3"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
               >
-                {showPassword ? (
-                  <EyeOff className="h-4 w-4 text-gray-400" />
-                ) : (
-                  <Eye className="h-4 w-4 text-gray-400" />
-                )}
-              </button>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div className="text-sm">
-              <a href="#" className="text-blue-600 hover:text-blue-500">
-                Forgot password?
-              </a>
-            </div>
-          </div>
-
-          <Button type="submit" className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-medium">
-            Login
-          </Button>
-        </form>
-
-        <div className="text-center text-sm text-gray-600">
-          Don't have an account?{" "}
-          <a href="#" className="text-blue-600 hover:text-blue-500 font-medium">
-            Sign Up
-          </a>
+                <path
+                  fill="currentColor"
+                  d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.112.82-.26.82-.577 0-.285-.01-1.04-.015-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.09-.746.083-.73.083-.73 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.775.418-1.305.762-1.605-2.665-.305-5.467-1.332-5.467-5.93 0-1.31.468-2.38 1.235-3.22-.123-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.289-1.552 3.295-1.23 3.295-1.23.653 1.653.242 2.874.118 3.176.77.84 1.232 1.91 1.232 3.22 0 4.61-2.807 5.624-5.48 5.921.43.372.815 1.102.815 2.222 0 1.605-.015 2.898-.015 3.293 0 .32.216.694.825.576C20.565 21.796 24 17.298 24 12c0-6.627-5.373-12-12-12z"
+                />
+              </svg>
+              Continue with GitHub
+            </Button>
+          </form>
         </div>
 
-        <div className="text-center text-xs text-gray-400 mt-6">Made with Visily</div>
+     
+
+        <div className="text-center text-xs text-gray-400 mt-6">
+          Made in India by tushar
+        </div>
       </CardContent>
     </Card>
-  )
+  );
 }
