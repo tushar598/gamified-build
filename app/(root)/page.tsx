@@ -7,7 +7,7 @@ export default async function LoginPage() {
   const session = await auth();
 
   // If no session, navigate to /dashboard
-  if (!session) {
+  if (session) {
     redirect("/dashboard");
   }
 
