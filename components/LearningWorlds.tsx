@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Lock } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export function LearningWorlds() {
   const worlds = [
@@ -13,7 +14,8 @@ export function LearningWorlds() {
       title: "Math World",
       progress: 75,
       locked: false,
-      image: "/math.svg", // replace with actual asset path
+      image: "/math.svg",
+      route: "/math-world", // replace with actual asset path
     },
     {
       id: 2,
@@ -21,6 +23,7 @@ export function LearningWorlds() {
       progress: 40,
       locked: false,
       image: "/art-galaxy-space.jpg",
+      route: "/science-world",
     },
     {
       id: 3,
@@ -28,6 +31,7 @@ export function LearningWorlds() {
       progress: 0,
       locked: true,
       image: "/ai-brain-network-connections.jpg",
+      route: "/history-world",
     },
     {
       id: 4,
@@ -35,6 +39,7 @@ export function LearningWorlds() {
       progress: 0,
       locked: true,
       image: "/digital-certificates-career-pathway.jpg",
+      route: "/english-world",
     },
     {
       id: 5,
@@ -42,6 +47,7 @@ export function LearningWorlds() {
       progress: 0,
       locked: true,
       image: "/mystical-forest-theme.jpg",
+      route: "/art-world",
     },
     {
       id: 6,
@@ -49,6 +55,7 @@ export function LearningWorlds() {
       progress: 0,
       locked: true,
       image: "/ocean-depths-avatar.jpg",
+      route: "/music-world",
     },
   ];
 
@@ -107,13 +114,20 @@ export function LearningWorlds() {
                 </div>
 
                 {!world.locked ? (
-                  <Button className="w-full  text-lg py-6 bg-blue-600 hover:bg-blue-700">
-                    Start Learning
-                  </Button>
+                  <Link href={world.route} className="block w-full">
+                    <Button
+                      className="w-full text-lg py-6 bg-blue-600 hover:bg-blue-700"
+                      asChild
+                    >
+                      <span>Explore</span>
+                    </Button>
+                  </Link>
                 ) : (
                   <Button
                     disabled={world.locked}
-                    className={`w-full text-lg py-6 ${!world.locked ? "bg-blue-600 hover:bg-blue-700" : ""}`}
+                    className={`w-full text-lg py-6 ${
+                      !world.locked ? "bg-blue-600 hover:bg-blue-700" : ""
+                    }`}
                   >
                     Locked
                   </Button>
