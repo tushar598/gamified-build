@@ -13,42 +13,42 @@ export function LearningWorlds() {
       title: "Math World",
       progress: 75,
       locked: false,
-      image: "/tushar gibli.jpeg", // replace with actual asset path
+      image: "/math.svg", // replace with actual asset path
     },
     {
       id: 2,
       title: "Science World",
       progress: 40,
       locked: false,
-      image: "/images/science-world.png",
+      image: "/art-galaxy-space.jpg",
     },
     {
       id: 3,
       title: "History World",
       progress: 0,
       locked: true,
-      image: "/images/history-world.png",
+      image: "/ai-brain-network-connections.jpg",
     },
     {
       id: 4,
       title: "English World",
       progress: 0,
       locked: true,
-      image: "/images/english-world.png",
+      image: "/digital-certificates-career-pathway.jpg",
     },
     {
       id: 5,
       title: "Art & Design World",
       progress: 0,
       locked: true,
-      image: "/images/art-world.png",
+      image: "/mystical-forest-theme.jpg",
     },
     {
       id: 6,
       title: "Music World",
       progress: 0,
       locked: true,
-      image: "/images/music-world.png",
+      image: "/ocean-depths-avatar.jpg",
     },
   ];
 
@@ -61,7 +61,7 @@ export function LearningWorlds() {
         </h2>
         <p className="text-gray-600 max-w-xl mt-6">
           Dive into exciting subjects, unlock new chapters, and master skills at
-          your own pace. Each world holds unique challenges and rewards, waiting 
+          your own pace. Each world holds unique challenges and rewards, waiting
           for you to explore!
         </p>
       </div>
@@ -71,18 +71,24 @@ export function LearningWorlds() {
         {worlds.map((world) => (
           <Card
             key={world.id}
-            className={`rounded-xl border py-0 ${
+            className={`rounded-xl border-none w-full ${
               world.locked ? "opacity-60 bg-gray-50" : "bg-white"
             }`}
+            style={{
+              maxWidth: "100%",
+              minWidth: 0,
+              maxHeight: "500px",
+              minHeight: "450px"
+            }}
           >
             <CardContent className="p-0">
               {/* World Image */}
-              <div className="relative  w-full h-60">
+              <div className="relative w-full aspect-[16/9]">
                 <Image
                   src={world.image}
                   alt={world.title}
                   fill
-                  className="object-fill rounded-t-2xl"
+                  className=" rounded-t-2xl"
                 />
                 {world.locked && (
                   <div className="absolute inset-0 bg-white/70 flex flex-col items-center justify-center">
@@ -95,7 +101,7 @@ export function LearningWorlds() {
               </div>
 
               {/* World Info */}
-              <div className="p-4 space-y-3">
+              <div className="p-4 mt-4 space-y-3">
                 <h3 className="font-semibold text-gray-800">{world.title}</h3>
 
                 <div className="space-y-2">
@@ -107,7 +113,7 @@ export function LearningWorlds() {
                 </div>
 
                 {!world.locked ? (
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                  <Button className="w-full  text-lg py-6 bg-blue-600 hover:bg-blue-700">
                     Start Learning
                   </Button>
                 ) : (

@@ -117,10 +117,10 @@
 
 @layer base {
   * {
-    border-color: var(--border);
+    /* border-color: var(--border);
     outline-color: color-mix(in oklab, var(--ring) 50%, transparent);
     outline-width: 1px;
-    outline-style: solid;
+    outline-style: solid; */
   }
   body {
     background-color: var(--background);

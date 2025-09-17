@@ -22,6 +22,8 @@ import {
   Menu,
   X,
   Grid,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 
 interface DashboardLayoutProps {
@@ -31,6 +33,7 @@ interface DashboardLayoutProps {
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [subjectOpen, setSubjectOpen] = useState(true);
+  const [openWorld, setOpenWorld] = useState<string | null>(null);
 
   const subjectWorldItems = [
     { icon: Brain, label: "Math World", href: "/dashboard/math", active: true },
@@ -43,23 +46,17 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     { icon: BookOpen, label: "Chapters & Levels", href: "/chapters" },
     { icon: Gamepad2, label: "Quizzes", href: "/quizzes" },
     { icon: Gamepad2, label: "Micro-Games", href: "/micro-games" },
-    { icon: Trophy, label: "Leaderboards", href: "/leaderboards" },
     { icon: Target, label: "Challenges", href: "/challenges" },
   ];
 
   const adminToolItems = [
-    { icon: BookOpen, label: "Content Mgmt", href: "/admin/content" },
     { icon: Users, label: "User Management", href: "/admin/users" },
-    { icon: DollarSign, label: "Monetization", href: "/admin/monetization" },
     { icon: BarChart3, label: "System Analytics", href: "/admin/analytics" },
     { icon: TrendingUp, label: "Growth Metrics", href: "/admin/growth" },
-    { icon: Wifi, label: "Offline Status", href: "/admin/offline" },
-    { icon: Lightbulb, label: "Solutions", href: "/admin/solutions" },
-    { icon: Brain, label: "AI Scope", href: "/admin/ai-scope" },
   ];
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen gap-y-3 bg-gray-50">
       {/* Sidebar */}
       <div
         className={`${
@@ -98,7 +95,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             </a>
           </nav>
 
-          {/* Subject Worlds (Collapsible) */}
+          {/* Subject Worlds with Dropdown Features */}
           <div className="mt-4 px-4">
             <button
               onClick={() => setSubjectOpen(!subjectOpen)}
@@ -112,40 +109,52 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 {subjectOpen ? "▲" : "▼"}
               </span>
             </button>
+
             {subjectOpen && (
-              <nav className="mt-2 ml-6 space-y-1">
+              <nav className="mt-2 ml-4 space-y-1">
                 {subjectWorldItems.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className={`flex items-center px-3 py-2 text-sm font-medium rounded-md ${
-                      item.active
-                        ? "bg-blue-600 text-white"
-                        : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                    }`}
-                  >
-                    <item.icon className="mr-3 h-4 w-4" />
-                    {item.label}
-                  </a>
+                  <div key={item.label}>
+                    <button
+                      onClick={() =>
+                        setOpenWorld(
+                          openWorld === item.label ? null : item.label
+                        )
+                      }
+                      className={`flex items-center justify-between w-full px-3 py-2 text-sm font-medium rounded-md ${
+                        item.active
+                          ? "bg-blue-600 text-white"
+                          : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                      }`}
+                    >
+                      <span className="flex items-center">
+                        <item.icon className="mr-3 h-4 w-4" />
+                        {item.label}
+                      </span>
+                      {openWorld === item.label ? (
+                        <ChevronUp className="h-4 w-4" />
+                      ) : (
+                        <ChevronDown className="h-4 w-4" />
+                      )}
+                    </button>
+
+                    {openWorld === item.label && (
+                      <div className="ml-6 mt-1 space-y-1">
+                        {featureItems.map((feature) => (
+                          <a
+                            key={feature.label}
+                            href={feature.href}
+                            className="flex items-center px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100 hover:text-gray-900"
+                          >
+                            <feature.icon className="mr-2 h-4 w-4" />
+                            {feature.label}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 ))}
               </nav>
             )}
-          </div>
-
-          {/* Features */}
-          <div className="mt-6 px-4">
-            <nav className="space-y-1">
-              {featureItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900"
-                >
-                  <item.icon className="mr-3 h-4 w-4" />
-                  {item.label}
-                </a>
-              ))}
-            </nav>
           </div>
 
           {/* Admin Tools */}
@@ -167,12 +176,9 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             </nav>
           </div>
 
-          {/* Settings & Support (blue buttons) */}
-          <div className="mt-6 px-4 border-t border-gray-200 pt-4">
+          {/* Support */}
+          <div className=" px-4 border-t border-gray-200 pt-4">
             <div className="space-y-2">
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center">
-                <Settings className="mr-2 h-4 w-4" /> Settings
-              </Button>
               <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center">
                 <LifeBuoy className="mr-2 h-4 w-4" /> Support
               </Button>
