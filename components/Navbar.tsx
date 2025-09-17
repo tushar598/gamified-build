@@ -1,14 +1,50 @@
+"use client";
+
 import { auth } from "@/auth";
 import { User, Bell, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
-export default async function Navbar() {
-  const session = await auth();
+type SessionUser = {
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+};
+
+type Session = {
+  user?: SessionUser;
+  [key: string]: any;
+} | null;
+
+export default function Navbar() {
+  const pathname = usePathname();
+  const [session, setSession] = useState<Session>(null);
+
+  // Load session client-side since we switched to "use client"
+  useEffect(() => {
+    async function fetchSession() {
+      const res = await fetch("/api/auth/session");
+      const data = await res.json();
+      if (Object.keys(data).length !== 0) {
+        setSession(data);
+      }
+    }
+    fetchSession();
+  }, []);
+
+  const navLinks = [
+    { href: "/dashboard", label: "Home" },
+    { href: "/gamification", label: "Gamification" },
+    { href: "/", label: "Performance" },
+    { href: "/admin", label: "Admin" },
+    { href: "/analytics", label: "Analytics" },
+  ];
 
   return (
     <header className="w-full bg-white border-b border-gray-200">
-      <div className=" h-20 mx-auto flex items-center justify-between px-6 py-3">
+      <div className="h-20 mx-auto flex items-center justify-between px-6 py-3">
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <div className="w-9 h-9 bg-blue-600 rounded flex items-center justify-center aspect-square">
@@ -21,24 +57,19 @@ export default async function Navbar() {
 
         {/* Navigation */}
         <nav className="hidden md:flex space-x-6 text-sm md:text-base font-medium">
-          <Link href="/dashboard" className="text-blue-600">
-            Home
-          </Link>
-          <Link
-            href="/gamification"
-            className="text-gray-700 hover:text-blue-600"
-          >
-            Gamification
-          </Link>
-          <Link href="/" className="text-gray-700 hover:text-blue-600">
-            Performance
-          </Link>
-          <Link href="/admin" className="text-gray-700 hover:text-blue-600">
-            Admin
-          </Link>
-          <Link href="/analytics" className="text-gray-700 hover:text-blue-600">
-            Analytics
-          </Link>
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`${
+                pathname === link.href
+                  ? "text-blue-600 font-semibold"
+                  : "text-gray-700 hover:text-blue-600"
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
         {/* Right side icons */}
