@@ -74,16 +74,10 @@ export function LearningWorlds() {
             className={`rounded-xl border-none w-full ${
               world.locked ? "opacity-60 bg-gray-50" : "bg-white"
             }`}
-            style={{
-              maxWidth: "100%",
-              minWidth: 0,
-              maxHeight: "500px",
-              minHeight: "450px"
-            }}
           >
             <CardContent className="p-0">
               {/* World Image */}
-              <div className="relative w-full aspect-[16/9]">
+              <div className="relative  w-full aspect-[16/14]">
                 <Image
                   src={world.image}
                   alt={world.title}
@@ -91,9 +85,9 @@ export function LearningWorlds() {
                   className=" rounded-t-2xl"
                 />
                 {world.locked && (
-                  <div className="absolute inset-0 bg-white/70 flex flex-col items-center justify-center">
-                    <Lock className="w-8 h-8 text-gray-500 mb-2" />
-                    <p className="text-sm text-gray-600 text-center px-3">
+                  <div className="absolute inset-0 bg-white/50 flex flex-col items-center justify-center">
+                    <Lock className="w-8 h-8 text-gray-800 mb-2" />
+                    <p className="text-sm text-black text-center px-3">
                       Complete previous worlds to unlock
                     </p>
                   </div>
@@ -117,7 +111,10 @@ export function LearningWorlds() {
                     Start Learning
                   </Button>
                 ) : (
-                  <Button disabled className="w-full">
+                  <Button
+                    disabled={world.locked}
+                    className={`w-full text-lg py-6 ${!world.locked ? "bg-blue-600 hover:bg-blue-700" : ""}`}
+                  >
                     Locked
                   </Button>
                 )}

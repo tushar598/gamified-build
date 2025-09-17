@@ -1,14 +1,45 @@
-import { auth } from "@/auth";
-import { User, Bell, Search } from "lucide-react";
+"use client";
+
+import { User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
-export default async function Navbar() {
-  const session = await auth();
+type SessionUser = {
+  name?: string;
+  image?: string;
+  email?: string;
+};
+
+type Session = {
+  user?: SessionUser;
+  [key: string]: any;
+} | null;
+
+export default function Navbar() {
+  const pathname = usePathname();
+  const [session, setSession] = useState<Session>(null);
+
+  useEffect(() => {
+    async function fetchSession() {
+      const res = await fetch("/api/auth/session");
+      const data = await res.json();
+      if (Object.keys(data).length !== 0) {
+        setSession(data);
+      }
+    }
+    fetchSession();
+  }, []);
+
+  const navLinks = [
+    { href: "/dashboard", label: "Home" },
+    { href: "/gamification", label: "Gamification" },
+  ];
 
   return (
-    <header className="w-full bg-white border-b border-gray-200">
-      <div className=" h-20 mx-auto flex items-center justify-between px-6 py-3">
+    <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
+      <div className="h-20 mx-auto flex items-center justify-between px-6 py-3">
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <div className="w-9 h-9 bg-blue-600 rounded flex items-center justify-center aspect-square">
@@ -19,37 +50,26 @@ export default async function Navbar() {
           </span>
         </div>
 
-        {/* Navigation */}
-        <nav className="hidden md:flex space-x-6 text-sm md:text-base font-medium">
-          <Link href="/dashboard" className="text-blue-600">
-            Home
-          </Link>
-          <Link
-            href="/gamification"
-            className="text-gray-700 hover:text-blue-600"
-          >
-            Gamification
-          </Link>
-          <Link href="/" className="text-gray-700 hover:text-blue-600">
-            Performance
-          </Link>
-          <Link href="/admin" className="text-gray-700 hover:text-blue-600">
-            Admin
-          </Link>
-          <Link href="/analytics" className="text-gray-700 hover:text-blue-600">
-            Analytics
-          </Link>
-        </nav>
+        {/* Right side: Links + Profile/Login */}
+        <div className="flex items-center space-x-6">
+          {/* Navigation Links */}
+          <nav className="hidden md:flex space-x-6 text-sm md:text-base font-medium">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`${
+                  pathname === link.href
+                    ? "text-blue-600 font-semibold"
+                    : "text-gray-700 hover:text-blue-600"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
 
-        {/* Right side icons */}
-        <div className="flex items-center space-x-4 ml-4">
-          <button className="p-2 rounded-full hover:bg-gray-100">
-            <Search className="w-5 h-5 text-gray-600" />
-          </button>
-          <button className="p-2 rounded-full hover:bg-gray-100">
-            <Bell className="w-5 h-5 text-gray-600" />
-          </button>
-
+          {/* Auth */}
           {session?.user ? (
             <div className="flex items-center space-x-2">
               {session.user.image ? (
@@ -64,15 +84,12 @@ export default async function Navbar() {
               ) : (
                 <User className="w-6 h-6 text-gray-600" />
               )}
-              <span className="hidden md:block text-sm md:text-base font-medium text-gray-700">
-                {session.user.name}
-              </span>
+             
 
-              {/* Logout */}
               <form method="post" action="/api/auth/signout">
                 <button
                   type="submit"
-                  className="text-xs md:text-sm text-red-500 hover:underline"
+                  className="text-md cursor-pointer text-red-400 hover:text-red-500"
                 >
                   Logout
                 </button>

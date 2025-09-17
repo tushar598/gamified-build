@@ -1,16 +1,22 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Switch } from "@/components/ui/switch"
-import { Progress } from "@/components/ui/progress"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Switch } from "@/components/ui/switch";
+import { Progress } from "@/components/ui/progress";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Search,
   Upload,
@@ -37,7 +43,7 @@ import {
   Download,
   Eye,
   Zap,
-} from "lucide-react"
+} from "lucide-react";
 import {
   Line,
   LineChart,
@@ -49,19 +55,48 @@ import {
   Area,
   BarChart,
   Bar,
-} from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+} from "recharts";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 
 export function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState("overview")
+  const [activeTab, setActiveTab] = useState("overview");
 
   const quizzes = [
-    { title: "Algebra Basics", subject: "Mathematics", questions: 15, status: "Active" },
-    { title: "Planetary Systems", subject: "Science", questions: 10, status: "Draft" },
-    { title: "World War I Causes", subject: "History", questions: 20, status: "Active" },
-    { title: "Literary Devices", subject: "English", questions: 12, status: "Active" },
-    { title: "Chemical Reactions", subject: "Science", questions: 18, status: "Draft" },
-  ]
+    {
+      title: "Algebra Basics",
+      subject: "Mathematics",
+      questions: 15,
+      status: "Active",
+    },
+    {
+      title: "Planetary Systems",
+      subject: "Science",
+      questions: 10,
+      status: "Draft",
+    },
+    {
+      title: "World War I Causes",
+      subject: "History",
+      questions: 20,
+      status: "Active",
+    },
+    {
+      title: "Literary Devices",
+      subject: "English",
+      questions: 12,
+      status: "Active",
+    },
+    {
+      title: "Chemical Reactions",
+      subject: "Science",
+      questions: 18,
+      status: "Draft",
+    },
+  ];
 
   const signupData = [
     { month: "Jan", signups: 700 },
@@ -70,13 +105,13 @@ export function AdminDashboard() {
     { month: "Apr", signups: 2800 },
     { month: "May", signups: 2100 },
     { month: "Jun", signups: 1400 },
-  ]
+  ];
 
   const assets = [
     { name: "Math World Chapter 1", language: "English", type: "Chapter" },
     { name: "Science World Intro", language: "Spanish", type: "Introduction" },
     { name: "History Overview Guide", language: "French", type: "Guide" },
-  ]
+  ];
 
   const systemHealthData = [
     { time: "00:00", cpu: 45, memory: 62, disk: 78 },
@@ -85,7 +120,7 @@ export function AdminDashboard() {
     { time: "12:00", cpu: 75, memory: 85, disk: 80 },
     { time: "16:00", cpu: 82, memory: 78, disk: 81 },
     { time: "20:00", cpu: 65, memory: 70, disk: 82 },
-  ]
+  ];
 
   const userActivityData = [
     { day: "Mon", active: 1200, new: 45 },
@@ -95,29 +130,73 @@ export function AdminDashboard() {
     { day: "Fri", active: 1580, new: 78 },
     { day: "Sat", active: 980, new: 32 },
     { day: "Sun", active: 850, new: 28 },
-  ]
+  ];
 
   const recentUsers = [
-    { name: "Sarah Johnson", email: "sarah.j@email.com", status: "Active", joined: "2023-10-27", role: "Student" },
-    { name: "Mike Chen", email: "mike.chen@email.com", status: "Pending", joined: "2023-10-26", role: "Teacher" },
-    { name: "Emma Davis", email: "emma.d@email.com", status: "Active", joined: "2023-10-25", role: "Student" },
-    { name: "Alex Rodriguez", email: "alex.r@email.com", status: "Suspended", joined: "2023-10-24", role: "Student" },
-  ]
+    {
+      name: "Sarah Johnson",
+      email: "sarah.j@email.com",
+      status: "Active",
+      joined: "2023-10-27",
+      role: "Student",
+    },
+    {
+      name: "Mike Chen",
+      email: "mike.chen@email.com",
+      status: "Pending",
+      joined: "2023-10-26",
+      role: "Teacher",
+    },
+    {
+      name: "Emma Davis",
+      email: "emma.d@email.com",
+      status: "Active",
+      joined: "2023-10-25",
+      role: "Student",
+    },
+    {
+      name: "Alex Rodriguez",
+      email: "alex.r@email.com",
+      status: "Suspended",
+      joined: "2023-10-24",
+      role: "Student",
+    },
+  ];
 
   const systemAlerts = [
-    { type: "warning", message: "High memory usage detected on server cluster 2", time: "5 min ago" },
-    { type: "info", message: "Scheduled maintenance completed successfully", time: "2 hours ago" },
-    { type: "error", message: "Failed login attempts from IP 192.168.1.100", time: "3 hours ago" },
-    { type: "success", message: "Database backup completed", time: "6 hours ago" },
-  ]
+    {
+      type: "warning",
+      message: "High memory usage detected on server cluster 2",
+      time: "5 min ago",
+    },
+    {
+      type: "info",
+      message: "Scheduled maintenance completed successfully",
+      time: "2 hours ago",
+    },
+    {
+      type: "error",
+      message: "Failed login attempts from IP 192.168.1.100",
+      time: "3 hours ago",
+    },
+    {
+      type: "success",
+      message: "Database backup completed",
+      time: "6 hours ago",
+    },
+  ];
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Advanced Admin Panel</h1>
-          <p className="text-muted-foreground mt-1">Comprehensive system management and monitoring</p>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Advanced Admin Panel
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            Comprehensive system management and monitoring
+          </p>
         </div>
         <div className="flex items-center space-x-4">
           <div className="relative">
@@ -138,7 +217,11 @@ export function AdminDashboard() {
         </div>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="space-y-6"
+      >
         <TabsList className="grid w-full grid-cols-8">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="content">Content</TabsTrigger>
@@ -156,38 +239,54 @@ export function AdminDashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Total Users</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  Total Users
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">12,847</div>
-                <p className="text-xs text-green-600 mt-1">+8.2% from last month</p>
+                <p className="text-xs text-green-600 mt-1">
+                  +8.2% from last month
+                </p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Active Sessions</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  Active Sessions
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">1,423</div>
-                <p className="text-xs text-green-600 mt-1">+12.5% from yesterday</p>
+                <p className="text-xs text-green-600 mt-1">
+                  +12.5% from yesterday
+                </p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">System Uptime</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  System Uptime
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">99.9%</div>
-                <p className="text-xs text-muted-foreground mt-1">Last 30 days</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Last 30 days
+                </p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Revenue (MTD)</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  Revenue (MTD)
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">$24,680</div>
-                <p className="text-xs text-green-600 mt-1">+15.3% from last month</p>
+                <p className="text-xs text-green-600 mt-1">
+                  +15.3% from last month
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -262,7 +361,10 @@ export function AdminDashboard() {
               <CardContent>
                 <div className="space-y-3">
                   {recentUsers.map((user, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
+                    <div
+                      key={index}
+                      className="flex items-center justify-between p-3 border rounded-lg"
+                    >
                       <div>
                         <p className="font-medium">{user.name}</p>
                         <p className="text-sm text-muted-foreground">
@@ -275,13 +377,15 @@ export function AdminDashboard() {
                             user.status === "Active"
                               ? "default"
                               : user.status === "Pending"
-                                ? "secondary"
-                                : "destructive"
+                              ? "secondary"
+                              : "destructive"
                           }
                         >
                           {user.status}
                         </Badge>
-                        <p className="text-xs text-muted-foreground mt-1">{user.joined}</p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {user.joined}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -299,21 +403,26 @@ export function AdminDashboard() {
               <CardContent>
                 <div className="space-y-3">
                   {systemAlerts.map((alert, index) => (
-                    <div key={index} className="flex items-start space-x-3 p-3 border rounded-lg">
+                    <div
+                      key={index}
+                      className="flex items-start space-x-3 p-3 border rounded-lg"
+                    >
                       <div
                         className={`w-2 h-2 rounded-full mt-2 ${
                           alert.type === "error"
                             ? "bg-red-500"
                             : alert.type === "warning"
-                              ? "bg-yellow-500"
-                              : alert.type === "success"
-                                ? "bg-green-500"
-                                : "bg-blue-500"
+                            ? "bg-yellow-500"
+                            : alert.type === "success"
+                            ? "bg-green-500"
+                            : "bg-blue-500"
                         }`}
                       />
                       <div className="flex-1">
                         <p className="text-sm">{alert.message}</p>
-                        <p className="text-xs text-muted-foreground mt-1">{alert.time}</p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {alert.time}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -333,12 +442,17 @@ export function AdminDashboard() {
                   <Upload className="w-5 h-5" />
                   <span>Upload New Quiz</span>
                 </CardTitle>
-                <p className="text-sm text-gray-600">Add new quizzes by providing details and uploading quiz data.</p>
+                <p className="text-sm text-gray-600">
+                  Add new quizzes by providing details and uploading quiz data.
+                </p>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="quiz-title">Quiz Title</Label>
-                  <Input id="quiz-title" placeholder="e.g., Advanced Calculus" />
+                  <Input
+                    id="quiz-title"
+                    placeholder="e.g., Advanced Calculus"
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="quiz-subject">Subject</Label>
@@ -346,7 +460,10 @@ export function AdminDashboard() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="quiz-description">Description</Label>
-                  <Textarea id="quiz-description" placeholder="Briefly describe the quiz content and objectives." />
+                  <Textarea
+                    id="quiz-description"
+                    placeholder="Briefly describe the quiz content and objectives."
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="quiz-file">Quiz Data File (JSON/CSV)</Label>
@@ -366,11 +483,16 @@ export function AdminDashboard() {
                   <FileText className="w-5 h-5" />
                   <span>Asset Management</span>
                 </CardTitle>
-                <p className="text-sm text-gray-600">Edit, delete, and organize multilingual content assets.</p>
+                <p className="text-sm text-gray-600">
+                  Edit, delete, and organize multilingual content assets.
+                </p>
               </CardHeader>
               <CardContent className="space-y-4">
                 {assets.map((asset, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-3 border rounded-lg"
+                  >
                     <div>
                       <p className="font-medium text-gray-900">{asset.name}</p>
                       <p className="text-sm text-gray-600">
@@ -398,18 +520,30 @@ export function AdminDashboard() {
           <Card>
             <CardHeader>
               <CardTitle>Manage Existing Quizzes</CardTitle>
-              <p className="text-sm text-gray-600">Edit or delete quizzes from the platform.</p>
+              <p className="text-sm text-gray-600">
+                Edit or delete quizzes from the platform.
+              </p>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b">
-                      <th className="text-left py-3 px-4 font-medium text-gray-900">Title</th>
-                      <th className="text-left py-3 px-4 font-medium text-gray-900">Subject</th>
-                      <th className="text-left py-3 px-4 font-medium text-gray-900">Questions</th>
-                      <th className="text-left py-3 px-4 font-medium text-gray-900">Status</th>
-                      <th className="text-left py-3 px-4 font-medium text-gray-900">Actions</th>
+                      <th className="text-left py-3 px-4 font-medium text-gray-900">
+                        Title
+                      </th>
+                      <th className="text-left py-3 px-4 font-medium text-gray-900">
+                        Subject
+                      </th>
+                      <th className="text-left py-3 px-4 font-medium text-gray-900">
+                        Questions
+                      </th>
+                      <th className="text-left py-3 px-4 font-medium text-gray-900">
+                        Status
+                      </th>
+                      <th className="text-left py-3 px-4 font-medium text-gray-900">
+                        Actions
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -419,7 +553,13 @@ export function AdminDashboard() {
                         <td className="py-3 px-4">{quiz.subject}</td>
                         <td className="py-3 px-4">{quiz.questions}</td>
                         <td className="py-3 px-4">
-                          <Badge variant={quiz.status === "Active" ? "default" : "secondary"}>{quiz.status}</Badge>
+                          <Badge
+                            variant={
+                              quiz.status === "Active" ? "default" : "secondary"
+                            }
+                          >
+                            {quiz.status}
+                          </Badge>
                         </td>
                         <td className="py-3 px-4">
                           <div className="flex items-center space-x-2">
@@ -450,7 +590,9 @@ export function AdminDashboard() {
                   <BarChart3 className="w-5 h-5" />
                   <span>Adoption Statistics</span>
                 </CardTitle>
-                <p className="text-sm text-gray-600">Monitor user sign-ups and overall platform engagement.</p>
+                <p className="text-sm text-gray-600">
+                  Monitor user sign-ups and overall platform engagement.
+                </p>
               </CardHeader>
               <CardContent>
                 <ChartContainer
@@ -467,19 +609,24 @@ export function AdminDashboard() {
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="month" />
                       <YAxis />
-                      <ChartTooltip content={<ChartTooltipContent />} />
                       <Line
                         type="monotone"
                         dataKey="signups"
                         stroke="var(--color-signups)"
                         strokeWidth={3}
-                        dot={{ fill: "var(--color-signups)", strokeWidth: 2, r: 4 }}
+                        dot={{
+                          fill: "var(--color-signups)",
+                          strokeWidth: 2,
+                          r: 4,
+                        }}
                       />
                     </LineChart>
                   </ResponsiveContainer>
                 </ChartContainer>
                 <div className="flex items-center justify-between mt-4">
-                  <p className="text-sm text-gray-600">Total Sign-ups: 12,750</p>
+                  <p className="text-sm text-gray-600">
+                    Total Sign-ups: 12,750
+                  </p>
                   <Button variant="outline" size="sm">
                     View Full Report
                   </Button>
@@ -498,25 +645,37 @@ export function AdminDashboard() {
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-600">Minified JS</span>
-                  <Badge variant="default" className="bg-green-100 text-green-800">
+                  <Badge
+                    variant="default"
+                    className="bg-green-100 text-green-800"
+                  >
                     Active
                   </Badge>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-600">Minified CSS</span>
-                  <Badge variant="default" className="bg-green-100 text-green-800">
+                  <Badge
+                    variant="default"
+                    className="bg-green-100 text-green-800"
+                  >
                     Active
                   </Badge>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-600">CDN Status</span>
-                  <Badge variant="default" className="bg-green-100 text-green-800">
+                  <Badge
+                    variant="default"
+                    className="bg-green-100 text-green-800"
+                  >
                     Optimal
                   </Badge>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-600">Offline Caching</span>
-                  <Badge variant="default" className="bg-green-100 text-green-800">
+                  <Badge
+                    variant="default"
+                    className="bg-green-100 text-green-800"
+                  >
                     Enabled
                   </Badge>
                 </div>
@@ -530,7 +689,9 @@ export function AdminDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-2xl font-bold">System Health & Monitoring</h2>
-              <p className="text-muted-foreground">Real-time system performance and infrastructure status</p>
+              <p className="text-muted-foreground">
+                Real-time system performance and infrastructure status
+              </p>
             </div>
             <Button variant="outline">
               <Download className="w-4 h-4 mr-2" />
@@ -546,8 +707,12 @@ export function AdminDashboard() {
                   <div className="flex items-center space-x-2">
                     <Server className="w-5 h-5 text-green-600" />
                     <div>
-                      <p className="text-sm text-muted-foreground">Server Status</p>
-                      <p className="font-semibold text-green-600">Operational</p>
+                      <p className="text-sm text-muted-foreground">
+                        Server Status
+                      </p>
+                      <p className="font-semibold text-green-600">
+                        Operational
+                      </p>
                     </div>
                   </div>
                   <CheckCircle className="w-6 h-6 text-green-600" />
@@ -574,7 +739,9 @@ export function AdminDashboard() {
                   <div className="flex items-center space-x-2">
                     <Globe className="w-5 h-5 text-green-600" />
                     <div>
-                      <p className="text-sm text-muted-foreground">CDN Status</p>
+                      <p className="text-sm text-muted-foreground">
+                        CDN Status
+                      </p>
                       <p className="font-semibold text-green-600">Optimal</p>
                     </div>
                   </div>
@@ -588,7 +755,9 @@ export function AdminDashboard() {
                   <div className="flex items-center space-x-2">
                     <Zap className="w-5 h-5 text-yellow-600" />
                     <div>
-                      <p className="text-sm text-muted-foreground">API Response</p>
+                      <p className="text-sm text-muted-foreground">
+                        API Response
+                      </p>
                       <p className="font-semibold">125ms avg</p>
                     </div>
                   </div>
@@ -687,7 +856,9 @@ export function AdminDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-2xl font-bold">User Management</h2>
-              <p className="text-muted-foreground">Manage user accounts, roles, and permissions</p>
+              <p className="text-muted-foreground">
+                Manage user accounts, roles, and permissions
+              </p>
             </div>
             <div className="flex space-x-2">
               <Button variant="outline">
@@ -719,7 +890,9 @@ export function AdminDashboard() {
                 <div className="flex items-center space-x-2">
                   <UserCheck className="w-5 h-5 text-green-600" />
                   <div>
-                    <p className="text-sm text-muted-foreground">Active Users</p>
+                    <p className="text-sm text-muted-foreground">
+                      Active Users
+                    </p>
                     <p className="text-2xl font-bold">11,203</p>
                   </div>
                 </div>
@@ -756,7 +929,10 @@ export function AdminDashboard() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex flex-col sm:flex-row gap-4">
-                <Input placeholder="Search users by name, email, or ID" className="flex-1" />
+                <Input
+                  placeholder="Search users by name, email, or ID"
+                  className="flex-1"
+                />
                 <Select>
                   <SelectTrigger className="w-48">
                     <SelectValue placeholder="Filter by role" />
@@ -798,7 +974,9 @@ export function AdminDashboard() {
                         <td className="p-3">
                           <div>
                             <p className="font-medium">{user.name}</p>
-                            <p className="text-sm text-muted-foreground">{user.email}</p>
+                            <p className="text-sm text-muted-foreground">
+                              {user.email}
+                            </p>
                           </div>
                         </td>
                         <td className="p-3">{user.role}</td>
@@ -808,14 +986,16 @@ export function AdminDashboard() {
                               user.status === "Active"
                                 ? "default"
                                 : user.status === "Pending"
-                                  ? "secondary"
-                                  : "destructive"
+                                ? "secondary"
+                                : "destructive"
                             }
                           >
                             {user.status}
                           </Badge>
                         </td>
-                        <td className="p-3 text-muted-foreground">{user.joined}</td>
+                        <td className="p-3 text-muted-foreground">
+                          {user.joined}
+                        </td>
                         <td className="p-3">
                           <div className="flex space-x-2">
                             <Button size="sm" variant="outline">
@@ -843,7 +1023,9 @@ export function AdminDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-2xl font-bold">Security & Compliance</h2>
-              <p className="text-muted-foreground">Monitor security events and compliance status</p>
+              <p className="text-muted-foreground">
+                Monitor security events and compliance status
+              </p>
             </div>
             <Button variant="outline">
               <Shield className="w-4 h-4 mr-2" />
@@ -862,7 +1044,9 @@ export function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold text-green-600">94/100</div>
-                <p className="text-sm text-muted-foreground mt-1">Excellent security posture</p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Excellent security posture
+                </p>
               </CardContent>
             </Card>
 
@@ -872,7 +1056,9 @@ export function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold">23</div>
-                <p className="text-sm text-muted-foreground mt-1">Last 24 hours</p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Last 24 hours
+                </p>
               </CardContent>
             </Card>
 
@@ -898,8 +1084,12 @@ export function AdminDashboard() {
                   <div className="flex items-center space-x-3">
                     <AlertTriangle className="w-4 h-4 text-yellow-500" />
                     <div>
-                      <p className="text-sm font-medium">Multiple failed login attempts</p>
-                      <p className="text-xs text-muted-foreground">IP: 192.168.1.100 • 15 attempts</p>
+                      <p className="text-sm font-medium">
+                        Multiple failed login attempts
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        IP: 192.168.1.100 • 15 attempts
+                      </p>
                     </div>
                   </div>
                   <div className="text-right">
@@ -913,8 +1103,12 @@ export function AdminDashboard() {
                   <div className="flex items-center space-x-3">
                     <CheckCircle className="w-4 h-4 text-green-500" />
                     <div>
-                      <p className="text-sm font-medium">SSL certificate renewed</p>
-                      <p className="text-xs text-muted-foreground">Valid until: 2024-10-27</p>
+                      <p className="text-sm font-medium">
+                        SSL certificate renewed
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Valid until: 2024-10-27
+                      </p>
                     </div>
                   </div>
                   <p className="text-xs text-muted-foreground">6 hours ago</p>
@@ -933,28 +1127,41 @@ export function AdminDashboard() {
                 <span>Monetization Settings</span>
               </CardTitle>
               <p className="text-sm text-gray-600">
-                Control subscriptions, in-app purchases, and promotional campaigns.
+                Control subscriptions, in-app purchases, and promotional
+                campaigns.
               </p>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h4 className="font-medium text-gray-900">Enable Premium Subscriptions</h4>
-                  <p className="text-sm text-gray-600">Allow users to purchase premium access.</p>
+                  <h4 className="font-medium text-gray-900">
+                    Enable Premium Subscriptions
+                  </h4>
+                  <p className="text-sm text-gray-600">
+                    Allow users to purchase premium access.
+                  </p>
                 </div>
                 <Switch />
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <h4 className="font-medium text-gray-900">In-App Cosmetics Store</h4>
-                  <p className="text-sm text-gray-600">Activate the store for avatar customizations.</p>
+                  <h4 className="font-medium text-gray-900">
+                    In-App Cosmetics Store
+                  </h4>
+                  <p className="text-sm text-gray-600">
+                    Activate the store for avatar customizations.
+                  </p>
                 </div>
                 <Switch />
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <h4 className="font-medium text-gray-900">Promotional Offers</h4>
-                  <p className="text-sm text-gray-600">Enable seasonal discount campaigns.</p>
+                  <h4 className="font-medium text-gray-900">
+                    Promotional Offers
+                  </h4>
+                  <p className="text-sm text-gray-600">
+                    Enable seasonal discount campaigns.
+                  </p>
                 </div>
                 <Switch />
               </div>
@@ -978,14 +1185,21 @@ export function AdminDashboard() {
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Overall System Health</h4>
-                  <Badge className="bg-green-100 text-green-800">Operational</Badge>
+                  <h4 className="font-medium text-gray-900 mb-2">
+                    Overall System Health
+                  </h4>
+                  <Badge className="bg-green-100 text-green-800">
+                    Operational
+                  </Badge>
                   <p className="text-sm text-gray-600 mt-2">
-                    All offline services are running smoothly with optimal performance.
+                    All offline services are running smoothly with optimal
+                    performance.
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Service Worker Status</h4>
+                  <h4 className="font-medium text-gray-900 mb-2">
+                    Service Worker Status
+                  </h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span className="text-gray-600">Status:</span>
@@ -1019,7 +1233,11 @@ export function AdminDashboard() {
                   </CardHeader>
                   <CardContent className="space-y-2">
                     <Input placeholder="Enter quiz title" className="text-xs" />
-                    <Textarea placeholder="Provide a brief description" className="text-xs" rows={2} />
+                    <Textarea
+                      placeholder="Provide a brief description"
+                      className="text-xs"
+                      rows={2}
+                    />
                     <Button size="sm" className="w-full">
                       Upload Quiz
                     </Button>
@@ -1030,7 +1248,11 @@ export function AdminDashboard() {
                     <CardTitle className="text-sm">User Management</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <Button size="sm" variant="outline" className="w-full bg-transparent">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full bg-transparent"
+                    >
                       <Users className="w-4 h-4 mr-2" />
                       Manage User Accounts
                     </Button>
@@ -1042,5 +1264,5 @@ export function AdminDashboard() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

@@ -36,10 +36,10 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   const [openWorld, setOpenWorld] = useState<string | null>(null);
 
   const subjectWorldItems = [
-    { icon: Brain, label: "Math World", href: "/dashboard/math", active: true },
-    { icon: BookOpen, label: "Science World", href: "/dashboard/science" },
-    { icon: History, label: "History World", href: "/dashboard/history" },
-    { icon: FileText, label: "English World", href: "/dashboard/english" },
+    { icon: Brain, label: "Math World", href: "/math" , active: false},
+    { icon: BookOpen, label: "Science World", href: "/science" },
+    { icon: History, label: "History World", href: "/history" },
+    { icon: FileText, label: "English World", href: "/english" },
   ];
 
   const featureItems = [
@@ -50,9 +50,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   ];
 
   const adminToolItems = [
-    { icon: Users, label: "User Management", href: "/admin/users" },
-    { icon: BarChart3, label: "System Analytics", href: "/admin/analytics" },
-    { icon: TrendingUp, label: "Growth Metrics", href: "/admin/growth" },
+    { icon: Users, label: "User Management", href: "/admin" },
+    { icon: BarChart3, label: "System Analytics", href: "/analytics" },
   ];
 
   return (
