@@ -1,11 +1,11 @@
-import { registerUserSchema } from "../types/authTypes.js";
+import { registerUserSchema , loginUserSchema , onboardingSchema } from "../types/authTypes.js";
 import User from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 
 dotenv.config();
-
+// register user controller
 export const registerUser = async (req, res) => {
     const userData = registerUserSchema.parse(req.body);
 
@@ -37,4 +37,61 @@ export const registerUser = async (req, res) => {
     } catch (error) {
         return res.status(500).json({message: "Internal server error"});
     }
+}
+
+// login user controller
+export const loginUser = async (req, res) => {
+    const {email, password} = loginUserSchema.parse(req.body);
+
+    try {
+        const user = await User.findOne({email});
+
+        if(!user){
+            return res.status(400).json({message: "User does not exist"});
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if(!isMatch){
+            return res.status(400).json({message: "Invalid credentials"});
+        }   
+        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
+        
+        res.cookie("token", token, {
+            httpOnly: true, 
+            secure: true,
+        });
+
+        return res.status(200).json({message: "User logged in successfully", user: user, token: token});    
+    } catch (error) {
+        return res.status(500).json({message: "Internal server error"});
+    }
+}
+
+// onboarding controller
+export const onboarding = async (req, res) =>{
+    const {grade, state, location, profileImage, language} = onboardingSchema.parse(req.body);
+    const userId = req.user.id;
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(userId, {
+            grade,
+            state,
+            location,
+            profileImage,
+            language,
+            isOnBoarded: true,
+            updatedAt: Date.now(),
+        }, {new: true});
+
+        return res.status(200).json({message: "User onboarded successfully", user: updatedUser});
+    } catch (error) {
+        return res.status(500).json({message: "Internal server error"});
+    }
+}
+
+// logout controller
+export const logout = (req, res) => {
+    res.clearCookie("token");
+    return res.status(200).json({message: "User logged out successfully"});
 }
