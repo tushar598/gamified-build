@@ -29,7 +29,7 @@ export const registerUser = async (req, res) => {
       password: hashedPassword,
     });
 
-    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: newUser._id.toString() }, process.env.JWT_SECRET);
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -59,12 +59,13 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ message: "User does not exist" });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
+    if (!isPasswordValid) {
+      return res.status(400).json({ message: "Invalid password" });
     }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+
+    const token = jwt.sign({ id: user._id.toString() }, process.env.JWT_SECRET);
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -79,6 +80,7 @@ export const loginUser = async (req, res) => {
         token: token,
       });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
