@@ -44,7 +44,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
   const featureItems = [
     { icon: BookOpen, label: "Chapters & Levels", href: "/chapters" },
-    { icon: Gamepad2, label: "Quizzes", href: "/quizzes" },
+    { icon: Gamepad2, label: "Quizzes", href: "/quiz" },
     { icon: Gamepad2, label: "Micro-Games", href: "/micro-games" },
     { icon: Target, label: "Challenges", href: "/challenges" },
   ];
