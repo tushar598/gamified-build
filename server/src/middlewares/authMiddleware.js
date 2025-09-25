@@ -19,11 +19,8 @@ export const authMiddleware = async (req, res, next) => {
       return res.status(401).json({ message: "No token provided" });
     }
 
-    console.log("Token Received:", token);
-
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log("Decoded Token:", decoded);
 
     // Find user by ID inside token
     const user = await User.findById(decoded.id).select("-password");
@@ -32,7 +29,7 @@ export const authMiddleware = async (req, res, next) => {
     }
 
     // Attach user to req
-    req.user = user;
+    req.userId = decoded.id;
 
     next();
   } catch (error) {
