@@ -8,8 +8,8 @@ import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: 'gemified_education_platform',
-  description: 'Created with v0',
-  generator: 'v0.app',
+  description: 'Created with tushar',
+  generator: 'Hustlers',
 }
 
 export default async function RootLayout({
