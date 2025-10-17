@@ -7,7 +7,7 @@ import { auth } from "@/auth";
 import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
-  title: 'v0 App',
+  title: 'gemified_education_platform',
   description: 'Created with v0',
   generator: 'v0.app',
 }
